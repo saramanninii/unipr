@@ -17,15 +17,10 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#6366f1',
-                        secondary: '#ec4899',
-                        accent: '#8b5cf6',
-                        darkbg: '#0f172a',
-                        darkcard: '#1e293b'
+                        primary: '#6366f1', secondary: '#ec4899', accent: '#8b5cf6',
+                        darkbg: '#0f172a', darkcard: '#1e293b'
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                 }
             }
         }
@@ -33,29 +28,17 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        
         [v-cloak] { display: none !important; }
-        
         .page-enter-active, .page-leave-active { transition: opacity 0.3s ease, transform 0.3s ease; }
         .page-enter-from { opacity: 0; transform: translateY(10px); }
         .page-leave-to { opacity: 0; transform: translateY(-10px); }
-        
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .dark ::-webkit-scrollbar-thumb { background: #475569; }
-        
-        .input-elegant { 
-            width: 100%; padding: 12px 16px; border-radius: 12px; 
-            background-color: #f8fafc; border: 1px solid #e2e8f0; 
-            outline: none; font-weight: 500; transition: all 0.2s; 
-        }
-        .dark .input-elegant { 
-            background-color: #1e293b; border-color: #334155; color: white; 
-        }
-        .input-elegant:focus { 
-            border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); 
-        }
+        .input-elegant { width: 100%; padding: 12px 16px; border-radius: 12px; background-color: #f8fafc; border: 1px solid #e2e8f0; outline: none; font-weight: 500; transition: all 0.2s; }
+        .dark .input-elegant { background-color: #1e293b; border-color: #334155; color: white; }
+        .input-elegant:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
     </style>
 </head>
 
@@ -76,9 +59,7 @@
                 <span>Streak</span>
                 <i class="ph-fill ph-fire text-orange-500 text-lg animate-pulse"></i>
             </div>
-            <div class="text-2xl font-black text-slate-800 dark:text-white">
-                {{ userStats.streak }} <span class="text-sm font-medium text-slate-400">giorni</span>
-            </div>
+            <div class="text-2xl font-black text-slate-800 dark:text-white">{{ userStats.streak }} <span class="text-sm font-medium text-slate-400">giorni</span></div>
         </div>
 
         <nav class="flex-1 overflow-y-auto py-4 space-y-1 px-3">
@@ -103,9 +84,7 @@
     <main class="flex-1 h-full overflow-y-auto relative bg-gray-50 dark:bg-darkbg scroll-smooth">
         <header class="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-darkcard sticky top-0 z-20 border-b dark:border-slate-800 shadow-sm">
             <span class="font-bold text-primary flex items-center gap-2 text-xl"><i class="ph-bold ph-student"></i> Uni</span>
-            <div class="flex items-center gap-1 text-orange-500 font-bold text-sm bg-orange-50 dark:bg-orange-900/20 px-2 py-1 rounded-full">
-                <i class="ph-fill ph-fire"></i> {{ userStats.streak }}
-            </div>
+            <div class="flex items-center gap-1 text-orange-500 font-bold text-sm bg-orange-50 dark:bg-orange-900/20 px-2 py-1 rounded-full"><i class="ph-fill ph-fire"></i> {{ userStats.streak }}</div>
         </header>
 
         <div class="p-6 lg:p-10 max-w-7xl mx-auto pb-32">
@@ -113,50 +92,223 @@
                 
                 <div v-if="currentView === 'dashboard'" key="dashboard">
                     <div v-if="alerts.length > 0" class="mb-8 space-y-3">
-                        <div v-for="(alert, idx) in alerts" :key="idx" class="p-4 rounded-xl flex items-center gap-3 shadow-sm border-l-4" 
-                            :class="alert.type === 'warning' ? 'bg-orange-50 border-orange-400 text-orange-800 dark:bg-orange-900/20 dark:text-orange-200' : 'bg-indigo-50 border-indigo-500 text-indigo-900 dark:bg-indigo-900/20 dark:text-indigo-200'">
-                            <i :class="['ph-fill text-xl', alert.icon]"></i>
-                            <span class="font-bold text-sm">{{ alert.msg }}</span>
+                        <div v-for="(alert, idx) in alerts" :key="idx" class="p-4 rounded-xl flex items-center gap-3 shadow-sm border-l-4" :class="alert.type === 'warning' ? 'bg-orange-50 border-orange-400 text-orange-800 dark:bg-orange-900/20 dark:text-orange-200' : 'bg-indigo-50 border-indigo-500 text-indigo-900 dark:bg-indigo-900/20 dark:text-indigo-200'">
+                            <i :class="['ph-fill text-xl', alert.icon]"></i><span class="font-bold text-sm">{{ alert.msg }}</span>
                         </div>
                     </div>
-
                     <header class="mb-8 flex justify-between items-end">
-                        <div>
-                            <h2 class="text-3xl font-extrabold mb-1 tracking-tight text-slate-900 dark:text-white">Dashboard</h2>
-                            <p class="text-slate-500 dark:text-slate-400 font-medium">Panoramica della tua carriera.</p>
-                        </div>
+                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight text-slate-900 dark:text-white">Dashboard</h2><p class="text-slate-500 dark:text-slate-400 font-medium">Panoramica della tua carriera.</p></div>
                     </header>
-
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                        <div class="bg-white dark:bg-darkcard p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm">
-                            <div class="flex items-center gap-2 mb-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                                <i class="ph-bold ph-calculator text-indigo-500"></i> Aritmetica
-                            </div>
-                            <span class="text-3xl font-bold text-slate-700 dark:text-white">{{ kpi.mediaAritmetica }}</span>
-                        </div>
-                        </div>
-                    
+                        <div class="bg-white dark:bg-darkcard p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm"><div class="flex items-center gap-2 mb-2 text-slate-400 text-xs font-bold uppercase tracking-wider"><i class="ph-bold ph-calculator text-indigo-500"></i> Aritmetica</div><span class="text-3xl font-bold text-slate-700 dark:text-white">{{ kpi.mediaAritmetica }}</span></div>
+                        <div class="bg-white dark:bg-darkcard p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm relative overflow-hidden group"><div class="absolute right-0 top-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity"><i class="ph-fill ph-crown text-6xl text-primary"></i></div><div class="flex items-center gap-2 mb-2 text-slate-400 text-xs font-bold uppercase tracking-wider"><i class="ph-bold ph-scales text-primary"></i> Ponderata</div><span class="text-3xl font-bold text-primary">{{ kpi.mediaPonderata }}</span></div>
+                        <div class="bg-white dark:bg-darkcard p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm"><div class="flex items-center gap-2 mb-2 text-slate-400 text-xs font-bold uppercase tracking-wider"><i class="ph-bold ph-chart-donut text-emerald-500"></i> CFU</div><div class="flex items-baseline gap-1"><span class="text-3xl font-bold text-slate-700 dark:text-white">{{ kpi.cfuAttuali }}</span><span class="text-sm text-slate-400">/ {{ settings.cfuTotali }}</span></div></div>
+                        <div class="bg-gradient-to-br from-indigo-600 to-purple-600 p-5 rounded-2xl shadow-lg text-white relative overflow-hidden"><div class="absolute -right-4 -bottom-4 opacity-20"><i class="ph-fill ph-graduation-cap text-8xl"></i></div><div class="text-indigo-100 text-xs font-bold uppercase tracking-wider mb-1">Previsione Laurea</div><span class="text-4xl font-extrabold">{{ kpi.votoLaurea }}</span></div>
+                    </div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 bg-white dark:bg-darkcard p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm">
-                            <h3 class="font-bold mb-6 flex items-center gap-2">
-                                <span class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/20 flex items-center justify-center text-primary"><i class="ph-bold ph-trend-up"></i></span> Andamento Voti
-                            </h3>
-                            <div style="height: 300px; position: relative;"><canvas id="mainChart"></canvas></div>
-                        </div>
-                        
-                        <div class="bg-white dark:bg-darkcard p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col">
-                            <h3 class="font-bold mb-4 flex items-center gap-2">
-                                <span class="w-8 h-8 rounded-lg bg-pink-50 dark:bg-pink-500/20 flex items-center justify-center text-secondary"><i class="ph-bold ph-calendar-check"></i></span> In Arrivo
-                            </h3>
-                            </div>
+                        <div class="lg:col-span-2 bg-white dark:bg-darkcard p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm"><h3 class="font-bold mb-6 flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/20 flex items-center justify-center text-primary"><i class="ph-bold ph-trend-up"></i></span> Andamento Voti</h3><div style="height: 300px; position: relative;"><canvas id="mainChart"></canvas></div></div>
+                        <div class="bg-white dark:bg-darkcard p-6 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col"><h3 class="font-bold mb-4 flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-pink-50 dark:bg-pink-500/20 flex items-center justify-center text-secondary"><i class="ph-bold ph-calendar-check"></i></span> In Arrivo</h3><div v-if="upcomingEvents.length === 0" class="flex-1 flex flex-col items-center justify-center text-slate-400 text-sm py-4"><i class="ph-duotone ph-coffee text-4xl mb-2 opacity-50"></i> Nessun appello.</div><div class="space-y-3"><div v-for="evt in upcomingEvents" :key="evt.id" class="flex items-center gap-4 p-3 rounded-xl bg-gray-50 dark:bg-slate-800/50 border border-transparent hover:border-pink-200 dark:hover:border-pink-900 transition-colors"><div class="flex flex-col items-center justify-center w-12 h-12 bg-white dark:bg-slate-800 border dark:border-slate-700 rounded-xl shadow-sm text-center"><span class="text-[10px] uppercase font-bold text-slate-400 leading-none mt-1">{{ new Date(evt.date).toLocaleString('it-IT', {month:'short'}) }}</span><span class="text-lg font-bold text-slate-700 dark:text-slate-200 leading-none">{{ new Date(evt.date).getDate() }}</span></div><div class="flex-1 min-w-0"><p class="font-bold text-sm truncate text-slate-700 dark:text-slate-200">{{ evt.title }}</p><div class="flex items-center gap-2 text-xs text-slate-500 mt-0.5"><span class="font-medium" :class="getDaysDiff(evt.date) <= 3 ? 'text-rose-500' : ''">{{ getDaysDiff(evt.date) === 0 ? 'Oggi' : (getDaysDiff(evt.date) === 1 ? 'Domani' : getDaysDiff(evt.date) + ' gg') }}</span> • <span>{{ evt.type }}</span></div></div></div></div></div>
                     </div>
                 </div>
 
-                </transition>
+                <div v-if="currentView === 'exams'" key="exams">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Libretto</h2><p class="text-slate-500 dark:text-slate-400 font-medium">Gestisci esami e monitora l'efficienza.</p></div>
+                        <button @click="openModal('exam')" class="bg-primary hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-500/30 transition-all flex items-center justify-center gap-2 active:scale-95"><i class="ph-bold ph-plus-circle text-lg"></i> Aggiungi Esame</button>
+                    </div>
+                    <div class="bg-white dark:bg-darkcard rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse whitespace-nowrap">
+                                <thead class="bg-slate-50 dark:bg-slate-800/50 text-xs uppercase text-slate-500 font-bold tracking-wider">
+                                    <tr><th class="p-5 pl-6">Materia</th><th class="p-5">CFU</th><th class="p-5">Voto</th><th class="p-5">Tempo Studio</th><th class="p-5">Efficienza</th><th class="p-5 text-right pr-6">Azioni</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100 dark:divide-slate-700">
+                                    <tr v-for="exam in sortedExams" :key="exam.id" class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                        <td class="p-5 pl-6"><div class="font-bold text-slate-700 dark:text-slate-200 text-base">{{ exam.name }}</div><div class="flex items-center gap-2 mt-1"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold" :class="exam.superato ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400' : 'bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400'"><span class="w-1 h-1 rounded-full" :class="exam.superato ? 'bg-emerald-500' : 'bg-slate-400'"></span>{{ exam.superato ? 'Superato' : 'Da Dare' }}</span></div></td>
+                                        <td class="p-5 text-sm font-medium text-slate-500">{{ exam.cfu }}</td>
+                                        <td class="p-5"><span v-if="exam.superato" class="font-bold text-lg" :class="exam.grade >= 28 ? 'text-emerald-500' : (exam.grade >= 24 ? 'text-indigo-500' : 'text-slate-600')">{{ exam.lode ? '30L' : exam.grade }}</span><span v-else class="text-slate-300">-</span></td>
+                                        <td class="p-5"><div class="flex items-center gap-3"><div class="font-bold text-slate-700 dark:text-slate-300 min-w-[60px]">{{ formatStudyTime(exam.studyHours) }}</div><button @click="openTimeModal(exam)" class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-slate-600 transition-colors shadow-sm border border-indigo-100 dark:border-slate-600"><i class="ph-bold ph-clock-plus"></i></button></div></td>
+                                        <td class="p-5"><div v-if="exam.superato && exam.studyHours > 0"><span class="text-xs font-bold text-slate-500">Voto/Ora:</span><div class="font-bold text-accent">{{ ((exam.grade || 18) / exam.studyHours).toFixed(2) }}</div></div><span v-else class="text-xs text-slate-300">N/A</span></td>
+                                        <td class="p-5 pr-6 text-right"><button @click="editExam(exam)" class="text-slate-400 hover:text-primary p-2 transition-colors"><i class="ph-bold ph-pencil-simple text-lg"></i></button><button @click="deleteExam(exam.id)" class="text-slate-400 hover:text-rose-500 p-2 transition-colors ml-1"><i class="ph-bold ph-trash text-lg"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="currentView === 'roadmap'" key="roadmap">
+                    <header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Roadmap Studio</h2><p class="text-slate-500 font-medium">Organizza gli argomenti giorno per giorno.</p></div>
+                    </header>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-1">
+                            <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 sticky top-4">
+                                <h3 class="font-bold text-lg mb-5 flex items-center gap-2"><i class="ph-bold ph-calendar-plus text-accent"></i> Aggiungi Task</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Materia</label>
+                                        <div class="relative">
+                                            <select v-model="formRoadmap.subjectId" class="w-full p-3 pl-4 pr-10 rounded-xl font-bold appearance-none outline-none border transition-all cursor-pointer shadow-sm" :class="getSubjectStyle(formRoadmap.subjectId, true)">
+                                                <option :value="null" class="bg-white text-slate-500">-- Seleziona Materia --</option>
+                                                <option v-for="e in exams" :key="e.id" :value="e.id" class="bg-white text-slate-800">{{ e.name }}</option>
+                                            </select>
+                                            <div class="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none transition-colors" :class="formRoadmap.subjectId ? 'text-current opacity-70' : 'text-slate-400'"><i class="ph-bold ph-caret-down text-lg"></i></div>
+                                        </div>
+                                    </div>
+                                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Data</label><input type="date" v-model="formRoadmap.date" class="input-elegant bg-white dark:bg-slate-800"></div>
+                                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Argomento / Capitolo</label><input type="text" v-model="formRoadmap.topic" placeholder="Es. Cinematica 1D..." class="input-elegant bg-white dark:bg-slate-800"></div>
+                                    <button @click="addToRoadmap" class="w-full py-3 bg-accent text-white font-bold rounded-xl shadow-lg shadow-violet-500/30 hover:bg-violet-600 transition-all flex items-center justify-center gap-2 active:scale-95"><i class="ph-bold ph-plus"></i> Aggiungi alla Roadmap</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2 space-y-8">
+                            <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700">
+                                <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg flex items-center gap-2 text-slate-700 dark:text-white"><i class="ph-bold ph-calendar text-primary"></i> {{ roadmapMonthName }} {{ roadmapYear }}</h3><div class="flex gap-1"><button @click="changeRoadmapMonth(-1)" class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"><i class="ph-bold ph-caret-left"></i></button><button @click="changeRoadmapMonth(1)" class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"><i class="ph-bold ph-caret-right"></i></button></div></div>
+                                <div class="grid grid-cols-7 gap-1 text-center mb-2"><div v-for="d in ['L','M','M','G','V','S','D']" class="text-xs font-bold text-slate-400">{{d}}</div></div>
+                                <div class="grid grid-cols-7 gap-1">
+                                    <div v-for="blank in roadmapFirstDay" :key="'rb'+blank" class="h-14"></div>
+                                    <div v-for="day in roadmapDaysInMonth" :key="day" class="h-14 border border-gray-50 dark:border-slate-800 rounded-lg p-1 flex flex-col items-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-default relative">
+                                        <span class="text-xs font-bold text-slate-500">{{ day }}</span>
+                                        <div class="flex flex-wrap gap-1 justify-center mt-1 w-full px-1"><div v-for="(task, idx) in getRoadmapTasksForDate(day)" :key="idx" :class="getSubjectStyle(task.subjectId, false).replace('text-', 'bg-').replace('bg-', 'bg-opacity-100 ')" class="w-1.5 h-1.5 rounded-full" :title="task.topic"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-if="roadmapItems.length === 0" class="flex flex-col items-center justify-center py-12 text-slate-400 bg-white dark:bg-darkcard rounded-2xl border border-dashed border-gray-300 dark:border-slate-700"><i class="ph-duotone ph-path text-4xl mb-3"></i><p class="font-medium">Nessun piano di studio. Aggiungi il primo step!</p></div>
+                            <div v-else class="space-y-8">
+                                <div v-for="(group, date) in groupedRoadmap" :key="date" class="relative pl-4 border-l-2 border-gray-200 dark:border-slate-700">
+                                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-200 dark:bg-slate-700 border-2 border-white dark:border-darkbg"></div>
+                                    <h4 class="font-bold text-slate-400 uppercase tracking-wider text-xs mb-4 mt-[-4px] pl-2">{{ formatDateHeader(date) }}</h4>
+                                    <div class="space-y-3 pl-2">
+                                        <div v-for="item in group" :key="item.id" @click="toggleRoadmapItem(item)" class="group bg-white dark:bg-darkcard p-4 rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all cursor-pointer flex items-start gap-4" :class="{'opacity-60 grayscale': item.done}">
+                                            <div class="mt-1 w-6 h-6 rounded-lg border-2 flex-shrink-0 flex items-center justify-center transition-colors" :class="item.done ? 'bg-emerald-500 border-emerald-500' : 'border-slate-300 dark:border-slate-600 group-hover:border-primary'"><i v-if="item.done" class="ph-bold ph-check text-white text-xs"></i></div>
+                                            <div class="flex-1">
+                                                <div class="flex justify-between items-start"><span class="text-[10px] uppercase font-bold px-2 py-1 rounded-lg mb-1 inline-block tracking-wide" :class="getSubjectStyle(item.subjectId, false)">{{ getExamName(item.subjectId) }}</span><button @click.stop="deleteRoadmapItem(item.id)" class="text-slate-300 hover:text-rose-500 transition-colors"><i class="ph-bold ph-trash"></i></button></div>
+                                                <h5 class="font-bold text-slate-800 dark:text-slate-200 text-lg" :class="{'line-through text-slate-400': item.done}">{{ item.topic }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="currentView === 'planning'" key="planning">
+                    <header class="mb-8"><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Focus Zone</h2><p class="text-slate-500 font-medium">Timer Pomodoro e note veloci.</p></header>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-1">
+                            <div class="bg-white dark:bg-darkcard rounded-3xl p-8 shadow-xl border border-indigo-100 dark:border-slate-700 text-center relative overflow-hidden flex flex-col items-center">
+                                <div class="absolute top-0 left-0 w-full h-1.5 bg-gray-100 dark:bg-slate-800"><div class="h-full bg-gradient-to-r from-secondary to-primary transition-all duration-1000" :style="`width: ${(pomo.timeLeft / pomo.totalTime)*100}%`"></div></div>
+                                <div class="flex justify-between w-full mb-6"><h3 class="text-slate-400 text-xs font-bold uppercase tracking-widest">Focus Timer</h3><button @click="showPomoSettings = !showPomoSettings" class="text-slate-400 hover:text-primary"><i class="ph-bold ph-gear"></i> Imposta</button></div>
+                                <div v-if="showPomoSettings" class="w-full bg-gray-50 dark:bg-slate-800 rounded-xl p-4 mb-6 animate-fade-in-down">
+                                    <div class="mb-3"><label class="text-xs font-bold text-slate-500 block mb-1">Durata Studio (min)</label><input type="range" v-model="pomo.settings.work" min="1" max="90" step="1" class="w-full accent-primary"><div class="text-right text-xs font-bold text-primary">{{ pomo.settings.work }} min</div></div>
+                                    <div><label class="text-xs font-bold text-slate-500 block mb-1">Durata Pausa (min)</label><input type="range" v-model="pomo.settings.break" min="1" max="30" step="1" class="w-full accent-emerald-500"><div class="text-right text-xs font-bold text-emerald-500">{{ pomo.settings.break }} min</div></div>
+                                    <button @click="applyPomoSettings" class="w-full mt-3 bg-slate-200 dark:bg-slate-700 text-xs font-bold py-2 rounded-lg">Salva</button>
+                                </div>
+                                <div v-else>
+                                    <div class="text-7xl font-bold tabular-nums tracking-tighter mb-8 text-slate-800 dark:text-white transition-colors duration-500">{{ formatTime(pomo.timeLeft) }}</div>
+                                    <div class="flex justify-center gap-2 mb-8 bg-gray-100 dark:bg-slate-800 p-1 rounded-xl"><button @click="setPomoMode('work')" class="px-4 py-2 rounded-lg text-xs font-bold transition-all" :class="pomo.mode === 'work' ? 'bg-white dark:bg-darkcard text-primary shadow-sm' : 'text-slate-500 hover:text-slate-700'">Studio</button><button @click="setPomoMode('break')" class="px-4 py-2 rounded-lg text-xs font-bold transition-all" :class="pomo.mode === 'break' ? 'bg-white dark:bg-darkcard text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'">Pausa</button></div>
+                                </div>
+                                <button @click="togglePomo" class="w-full py-4 rounded-xl font-bold text-lg text-white shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-3" :class="pomo.active ? 'bg-slate-800 hover:bg-slate-900' : 'bg-primary hover:bg-indigo-700 shadow-indigo-500/30'"><i :class="pomo.active ? 'ph-fill ph-pause' : 'ph-fill ph-play'"></i>{{ pomo.active ? 'Pausa' : 'Avvia' }}</button>
+                                
+                                <div v-if="pomo.mode === 'work'" class="mt-6 w-full">
+                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 text-left pl-1">Materia Target</label>
+                                    <div class="relative">
+                                        <select v-model="pomo.selectedExamId" class="w-full p-3 pl-4 pr-10 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-slate-700 dark:text-white font-bold text-sm appearance-none focus:border-primary focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/30 outline-none transition-all cursor-pointer">
+                                            <option :value="null">-- Nessuna (Solo Timer) --</option>
+                                            <option v-for="e in exams" :key="e.id" :value="e.id">{{ e.name }}</option>
+                                        </select>
+                                        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 pointer-events-none"><i class="ph-bold ph-caret-down"></i></div>
+                                    </div>
+                                </div>
+                                <button @click="resetPomo" class="mt-6 text-xs text-slate-400 font-bold hover:text-rose-500 transition-colors uppercase tracking-wider flex items-center gap-1"><i class="ph-bold ph-arrow-counter-clockwise"></i> Resetta</button>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2 bg-white dark:bg-darkcard rounded-2xl p-6 border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col h-full">
+                            <h3 class="font-bold text-lg mb-6 flex items-center gap-2"><i class="ph-bold ph-list-checks text-accent"></i> Note Veloci</h3>
+                            <div class="flex gap-3 mb-6"><input v-model="newTodo" @keyup.enter="addTodo" type="text" placeholder="Nuova nota..." class="input-elegant"><button @click="addTodo" class="bg-accent hover:bg-violet-600 text-white px-5 rounded-xl shadow-lg shadow-violet-500/30 transition-all active:scale-95"><i class="ph-bold ph-plus text-xl"></i></button></div>
+                            <div class="space-y-2 flex-1 overflow-y-auto pr-2"><div v-for="todo in todos" :key="todo.id" class="group flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 border border-transparent hover:border-gray-100 dark:hover:border-slate-700 transition-all cursor-pointer" @click="toggleTodo(todo)"><div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-200" :class="todo.done ? 'bg-accent border-accent scale-110' : 'border-slate-300 dark:border-slate-600 group-hover:border-accent'"><i v-if="todo.done" class="ph-bold ph-check text-white text-xs"></i></div><span class="flex-1 font-medium transition-colors text-lg" :class="todo.done ? 'text-slate-400 line-through' : 'text-slate-700 dark:text-slate-200'">{{ todo.text }}</span><button @click.stop="deleteTodo(todo.id)" class="opacity-0 group-hover:opacity-100 p-2 text-slate-300 hover:text-rose-500 transition-all"><i class="ph-bold ph-trash"></i></button></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="currentView === 'calendar'" key="calendar">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Calendario</h2><p class="text-slate-500 font-medium">Pianifica i tuoi esami.</p></div>
+                        <button @click="openModal('event')" class="bg-secondary hover:bg-pink-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-pink-500/30 transition-all flex items-center justify-center gap-2 active:scale-95"><i class="ph-bold ph-calendar-plus text-lg"></i> Aggiungi Data</button>
+                    </div>
+                    <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700">
+                        <div class="flex justify-between items-center mb-6"><button @click="changeMonth(-1)" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"><i class="ph-bold ph-caret-left text-xl"></i></button><span class="font-bold text-xl capitalize text-slate-700 dark:text-white">{{ monthName }} {{ currentYear }}</span><button @click="changeMonth(1)" class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"><i class="ph-bold ph-caret-right text-xl"></i></button></div>
+                        <div class="grid grid-cols-7 gap-px bg-gray-200 dark:bg-slate-700 rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700">
+                            <div v-for="d in ['Lun','Mar','Mer','Gio','Ven','Sab','Dom']" class="bg-gray-50 dark:bg-slate-800 p-3 text-center text-xs font-bold text-slate-400 uppercase tracking-wider">{{d}}</div>
+                            <div v-for="blank in firstDayOfMonth" :key="'b'+blank" class="bg-white dark:bg-darkcard min-h-[120px]"></div>
+                            <div v-for="day in daysInMonth" :key="day" class="bg-white dark:bg-darkcard min-h-[120px] p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 relative group cursor-pointer" @click="openDayModal(day)">
+                                <span class="text-sm font-bold w-8 h-8 flex items-center justify-center rounded-lg mb-1 transition-colors" :class="isToday(day) ? 'bg-primary text-white shadow-md shadow-indigo-500/30' : 'text-slate-500 group-hover:text-primary'">{{ day }}</span>
+                                <div class="space-y-1"><div v-for="evt in getEventsForDay(day)" :key="evt.id" @click.stop="deleteEvent(evt.id)" class="text-[11px] px-2 py-1.5 rounded-lg border-l-4 font-semibold shadow-sm hover:opacity-80 transition-opacity truncate flex items-center justify-between" :class="getEventColorClass(evt.type)" :title="evt.title"><span>{{ evt.title }}</span></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="currentView === 'settings'" key="settings">
+                    <h2 class="text-3xl font-extrabold mb-8 tracking-tight text-center">Impostazioni</h2>
+                    <div class="bg-white dark:bg-darkcard p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 max-w-2xl mx-auto">
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-2 gap-6"><div><label class="block text-xs font-bold text-slate-500 mb-2 uppercase">CFU Totali</label><input v-model.number="settings.cfuTotali" type="number" class="input-elegant font-bold"></div><div><label class="block text-xs font-bold text-slate-500 mb-2 uppercase">Punti Tesi</label><input v-model.number="settings.thesisPoints" type="number" class="input-elegant font-bold"></div></div>
+                            <div class="h-px bg-gray-100 dark:bg-slate-700 my-6"></div>
+                            <div class="grid grid-cols-2 gap-4"><button @click="exportData" class="flex items-center justify-center gap-2 p-4 rounded-xl border border-gray-200 dark:border-slate-700 font-bold hover:border-primary transition-all"><i class="ph-bold ph-download-simple"></i> Backup</button><button @click="triggerImport" class="flex items-center justify-center gap-2 p-4 rounded-xl border border-gray-200 dark:border-slate-700 font-bold hover:border-primary transition-all"><i class="ph-bold ph-upload-simple"></i> Ripristina</button><input type="file" ref="fileInput" class="hidden" @change="importData" accept=".json"></div>
+                            <button @click="resetAll" class="w-full p-4 text-rose-500 font-bold bg-rose-50 dark:bg-rose-500/10 rounded-xl hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-colors mt-4 border border-transparent hover:border-rose-200"><i class="ph-bold ph-trash mr-2"></i> Reset Totale</button>
+                        </div>
+                    </div>
+                </div>
+            </transition>
         </div>
     </main>
 
+    <div v-if="modals.exam" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" @click.self="modals.exam = false">
+        <div class="bg-white dark:bg-darkcard w-full max-w-lg rounded-3xl shadow-2xl p-8">
+            <h3 class="text-2xl font-bold mb-6 text-slate-800 dark:text-white">{{ editingExam ? 'Modifica' : 'Nuovo Esame' }}</h3>
+            <div class="space-y-5">
+                <input v-model="formExam.name" placeholder="Nome Materia" class="input-elegant">
+                <div class="grid grid-cols-2 gap-4"><input v-model.number="formExam.cfu" type="number" placeholder="CFU" class="input-elegant"><input v-model.number="formExam.semestre" type="number" placeholder="Semestre" class="input-elegant"></div>
+                <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-slate-800 rounded-xl"><span class="font-bold">Esame Superato?</span><button @click="formExam.superato = !formExam.superato" class="w-14 h-8 rounded-full relative shadow-inner transition-colors" :class="formExam.superato ? 'bg-emerald-500' : 'bg-slate-300'"><div class="w-6 h-6 bg-white rounded-full absolute top-1 transition-all shadow-md" :class="formExam.superato ? 'left-7' : 'left-1'"></div></button></div>
+                <div v-if="formExam.superato" class="grid grid-cols-2 gap-4"><input v-model.number="formExam.grade" type="number" placeholder="Voto" class="input-elegant"><label class="flex items-center gap-3 cursor-pointer p-2 justify-center bg-gray-50 dark:bg-slate-800 rounded-xl"><div class="w-5 h-5 border-2 rounded flex items-center justify-center transition-colors" :class="formExam.lode ? 'bg-primary border-primary' : 'border-slate-300'"><i v-if="formExam.lode" class="ph-bold ph-check text-white text-xs"></i></div><input type="checkbox" v-model="formExam.lode" class="hidden"><span class="font-bold">Lode</span></label></div>
+                <textarea v-model="formExam.note" placeholder="Note..." class="input-elegant h-24 resize-none"></textarea>
+            </div>
+            <div class="flex justify-end gap-3 mt-8"><button @click="modals.exam = false" class="px-5 py-2.5 font-bold text-slate-500 hover:bg-slate-100 rounded-xl">Annulla</button><button @click="saveExam" class="px-6 py-2.5 bg-primary text-white font-bold rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-500/30">Salva</button></div>
+        </div>
     </div>
+    
+    <div v-if="modals.event" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" @click.self="modals.event = false">
+        <div class="bg-white dark:bg-darkcard w-full max-w-md rounded-3xl shadow-2xl p-8">
+            <h3 class="text-xl font-bold mb-6 text-slate-800 dark:text-white">Nuova Scadenza</h3>
+            <div class="space-y-5">
+                <input v-model="formEvent.title" placeholder="Titolo" class="input-elegant">
+                <input v-model="formEvent.date" type="date" class="input-elegant">
+                <div class="grid grid-cols-3 gap-2"><button v-for="t in ['Scritto','Orale','Progetto']" :key="t" @click="formEvent.type = t" class="py-2.5 rounded-xl text-sm font-bold transition-all border border-transparent" :class="formEvent.type === t ? 'bg-indigo-100 text-indigo-700 ring-2 ring-indigo-500' : 'bg-gray-100 text-slate-500'">{{t}}</button></div>
+                <input v-model="formEvent.room" placeholder="Aula" class="input-elegant">
+            </div>
+            <div class="flex justify-end gap-3 mt-8"><button @click="modals.event = false" class="px-5 py-2.5 font-bold text-slate-500 hover:bg-slate-100 rounded-xl">Annulla</button><button @click="saveEvent" class="px-6 py-2.5 bg-secondary text-white font-bold rounded-xl hover:bg-pink-600 shadow-lg shadow-pink-500/30">Aggiungi</button></div>
+        </div>
+    </div>
+
+    <div v-if="modals.time" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" @click.self="modals.time = false">
+        <div class="bg-white dark:bg-darkcard w-full max-w-sm rounded-3xl shadow-2xl p-6">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 mb-3"><i class="ph-bold ph-clock text-2xl"></i></div>
+                <h3 class="text-lg font-bold text-slate-800 dark:text-white">Registra Studio</h3>
+                <p class="text-xs text-slate-400 font-medium uppercase mt-1">{{ selectedExamForTime?.name }}</p>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mb-4"><button @click="addTime(15)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+15m</button><button @click="addTime(30)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+30m</button><button @click="addTime(60)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+1h</button><button @click="addTime(120)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+2h</button></div>
+            <div class="relative mb-6"><input type="number" v-model.number="customTimeMinutes" placeholder="Minuti personalizzati..." class="input-elegant text-center"><button @click="addTime(customTimeMinutes)" class="absolute right-2 top-2 bottom-2 px-3 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold hover:bg-indigo-200">OK</button></div>
+            <button @click="modals.time = false" class="w-full py-3 text-sm font-bold text-slate-400 hover:text-slate-600">Chiudi</button>
+        </div>
+    </div>
+
+</div>
 
 <script>
     const { createApp, nextTick } = Vue;
@@ -166,16 +318,12 @@
             return {
                 currentView: 'dashboard',
                 isDark: false,
-                modals: {
-                    exam: false,
-                    event: false,
-                    time: false
-                },
+                modals: { exam: false, event: false, time: false },
                 editingExam: null,
                 selectedExamForTime: null,
                 customTimeMinutes: '',
                 showPomoSettings: false,
-
+                
                 navItems: [
                     { id: 'dashboard', label: 'Dashboard', icon: 'ph-squares-four' },
                     { id: 'exams', label: 'Libretto', icon: 'ph-books' },
@@ -184,79 +332,29 @@
                     { id: 'calendar', label: 'Calendario', icon: 'ph-calendar' },
                     { id: 'settings', label: 'Opzioni', icon: 'ph-gear' }
                 ],
-
-                settings: {
-                    cfuTotali: 180,
-                    thesisPoints: 4
-                },
                 
-                exams: [],
-                events: [],
-                todos: [],
+                settings: { cfuTotali: 180, thesisPoints: 4 },
+                exams: [], events: [], todos: [],
                 roadmapItems: [],
-                
-                formRoadmap: {
-                    subjectId: null,
-                    date: new Date().toISOString().split('T')[0],
-                    topic: ''
-                },
+                formRoadmap: { subjectId: null, date: new Date().toISOString().split('T')[0], topic: '' },
                 roadmapDate: new Date(),
 
-                userStats: {
-                    streak: 0,
-                    lastStudyDate: null
-                },
-                
-                formExam: {
-                    name: '',
-                    cfu: 6,
-                    semestre: 1,
-                    superato: false,
-                    grade: null,
-                    lode: false,
-                    note: '',
-                    studyHours: 0
-                },
-                
-                formEvent: {
-                    title: '',
-                    date: '',
-                    type: 'Scritto',
-                    room: ''
-                },
-                
+                userStats: { streak: 0, lastStudyDate: null },
+                formExam: { name: '', cfu: 6, semestre: 1, superato: false, grade: null, lode: false, note: '', studyHours: 0 },
+                formEvent: { title: '', date: '', type: 'Scritto', room: '' },
                 newTodo: '',
+                
+                // POMODORO CON DATA DI FINE PER EVITARE BLOCCHI IN BACKGROUND
+                pomo: { active: false, mode: 'work', timeLeft: 2700, totalTime: 2700, endTime: null, interval: null, settings: { work: 45, break: 10 }, selectedExamId: null },
 
-                // Configurazione Pomodoro Timer
-                pomo: {
-                    active: false,
-                    mode: 'work',
-                    timeLeft: 2700,
-                    totalTime: 2700,
-                    endTime: null,
-                    interval: null,
-                    settings: { work: 45, break: 10 },
-                    selectedExamId: null
-                },
-
-                today: new Date(),
-                currentMonth: new Date().getMonth(),
-                currentYear: new Date().getFullYear(),
+                today: new Date(), currentMonth: new Date().getMonth(), currentYear: new Date().getFullYear(),
                 chartInstance: null
             }
         },
         computed: {
-            sortedExams() {
-                return [...this.exams].sort((a, b) => a.semestre - b.semestre || a.name.localeCompare(b.name));
-            },
-            sortedEvents() {
-                return this.events
-                    .filter(e => new Date(e.date) >= new Date().setHours(0, 0, 0, 0))
-                    .sort((a, b) => new Date(a.date) - new Date(b.date));
-            },
-            upcomingEvents() {
-                return this.sortedEvents.slice(0, 3);
-            },
+            sortedExams() { return [...this.exams].sort((a,b) => a.semestre - b.semestre || a.name.localeCompare(b.name)); },
+            sortedEvents() { return this.events.filter(e => new Date(e.date) >= new Date().setHours(0,0,0,0)).sort((a,b) => new Date(a.date) - new Date(b.date)); },
+            upcomingEvents() { return this.sortedEvents.slice(0, 3); },
             groupedRoadmap() {
                 const groups = {};
                 const sorted = [...this.roadmapItems].sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -270,53 +368,34 @@
             roadmapYear() { return this.roadmapDate.getFullYear(); },
             roadmapMonthName() { return this.roadmapDate.toLocaleString('it-IT', { month: 'long' }); },
             roadmapDaysInMonth() { return new Date(this.roadmapYear, this.roadmapMonth + 1, 0).getDate(); },
-            roadmapFirstDay() {
-                let day = new Date(this.roadmapYear, this.roadmapMonth, 1).getDay();
-                return day === 0 ? 6 : day - 1;
+            roadmapFirstDay() { 
+                let day = new Date(this.roadmapYear, this.roadmapMonth, 1).getDay(); 
+                return day === 0 ? 6 : day - 1; 
             },
             kpi() {
                 const passed = this.exams.filter(e => e.superato);
                 const cfu = passed.reduce((sum, e) => sum + e.cfu, 0);
-                
                 if (!passed.length) return { mediaAritmetica: 0, mediaPonderata: 0, cfuAttuali: 0, votoLaurea: 0 };
-                
-                const sumV = passed.reduce((sum, e) => sum + (e.lode ? 31 : Number(e.grade)), 0);
+                const sumV = passed.reduce((sum, e) => sum + (e.lode ? 31 : Number(e.grade)), 0); // Forzato Number
                 const sumP = passed.reduce((sum, e) => sum + ((e.lode ? 30 : Number(e.grade)) * e.cfu), 0);
                 const mP = sumP / cfu;
-                
-                return {
-                    mediaAritmetica: (sumV / passed.length).toFixed(2),
-                    mediaPonderata: mP.toFixed(2),
-                    cfuAttuali: cfu,
-                    votoLaurea: ((mP * 110) / 30 + (this.settings.thesisPoints || 0)).toFixed(1)
-                }
+                return { mediaAritmetica: (sumV/passed.length).toFixed(2), mediaPonderata: mP.toFixed(2), cfuAttuali: cfu, votoLaurea: ((mP*110)/30 + (this.settings.thesisPoints||0)).toFixed(1) }
             },
             alerts() {
                 const a = [];
-                if (this.kpi.mediaPonderata > 0 && this.kpi.mediaPonderata < 22) 
-                    a.push({ type: 'warning', icon: 'ph-warning', msg: 'Attenzione alla media!' });
-                
-                if (this.kpi.mediaPonderata >= 28) 
-                    a.push({ type: 'success', icon: 'ph-thumbs-up', msg: 'Media eccellente, continua così!' });
-                
+                if (this.kpi.mediaPonderata > 0 && this.kpi.mediaPonderata < 22) a.push({ type:'warning', icon:'ph-warning', msg:'Attenzione alla media!' });
+                if (this.kpi.mediaPonderata >= 28) a.push({ type:'success', icon:'ph-thumbs-up', msg:'Media eccellente, continua così!' });
                 const urgent = this.upcomingEvents.find(e => this.getDaysDiff(e.date) <= 3);
-                if (urgent) 
-                    a.push({ type: 'warning', icon: 'ph-alarm', msg: `Scadenza vicina: ${urgent.title}` });
-                
-                if (this.userStats.streak > 3) 
-                    a.push({ type: 'success', icon: 'ph-fire', msg: `${this.userStats.streak} giorni di fila! 🔥` });
-                
+                if(urgent) a.push({ type:'warning', icon:'ph-alarm', msg: `Scadenza vicina: ${urgent.title}` });
+                if(this.userStats.streak > 3) a.push({ type:'success', icon:'ph-fire', msg: `${this.userStats.streak} giorni di fila! 🔥` });
                 return a;
             },
             daysInMonth() { return new Date(this.currentYear, this.currentMonth + 1, 0).getDate(); },
-            firstDayOfMonth() {
-                let day = new Date(this.currentYear, this.currentMonth, 1).getDay();
-                return day === 0 ? 6 : day - 1;
-            },
+            firstDayOfMonth() { let day = new Date(this.currentYear, this.currentMonth, 1).getDay(); return day === 0 ? 6 : day - 1; },
             monthName() { return new Date(this.currentYear, this.currentMonth).toLocaleString('it-IT', { month: 'long' }); }
         },
         watch: {
-            exams: { handler() { this.saveData(); if (this.currentView === 'dashboard') this.renderChartWithDelay(); }, deep: true },
+            exams: { handler() { this.saveData(); if(this.currentView==='dashboard') this.renderChartWithDelay(); }, deep: true },
             events: { handler() { this.saveData(); }, deep: true },
             todos: { handler() { this.saveData(); }, deep: true },
             roadmapItems: { handler() { this.saveData(); }, deep: true },
@@ -327,11 +406,8 @@
             this.loadData();
             this.updateStreak();
             const savedTheme = localStorage.getItem('uni_theme');
-            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                this.isDark = true;
-                document.documentElement.classList.add('dark');
-            }
-            if (this.currentView === 'dashboard') this.renderChartWithDelay();
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) { this.isDark = true; document.documentElement.classList.add('dark'); }
+            if(this.currentView === 'dashboard') this.renderChartWithDelay();
         },
         methods: {
             getSubjectStyle(id, isInput) {
@@ -340,200 +416,103 @@
                 const index = Math.abs(id) % palettes.length;
                 return isInput ? `${palettes[index]} border-2 focus:ring-2 ring-opacity-20` : palettes[index];
             },
-            toggleTheme() {
-                this.isDark = !this.isDark;
-                document.documentElement.classList.toggle('dark', this.isDark);
-                localStorage.setItem('uni_theme', this.isDark ? 'dark' : 'light');
-            },
-            saveData() {
-                localStorage.setItem('uni_data_v16', JSON.stringify({
-                    exams: this.exams,
-                    events: this.events,
-                    todos: this.todos,
-                    roadmapItems: this.roadmapItems,
-                    settings: this.settings,
-                    userStats: this.userStats,
-                    pomoSettings: this.pomo.settings
-                }));
-            },
+            toggleTheme() { this.isDark=!this.isDark; document.documentElement.classList.toggle('dark', this.isDark); localStorage.setItem('uni_theme', this.isDark?'dark':'light'); },
+            saveData() { localStorage.setItem('uni_data_v16', JSON.stringify({ exams: this.exams, events: this.events, todos: this.todos, roadmapItems: this.roadmapItems, settings: this.settings, userStats: this.userStats, pomoSettings: this.pomo.settings })); },
             loadData() {
                 const d = JSON.parse(localStorage.getItem('uni_data_v16') || localStorage.getItem('uni_data_v15') || localStorage.getItem('uni_data_v14'));
-                if (d) {
-                    this.exams = d.exams || [];
-                    this.events = d.events || [];
-                    this.todos = d.todos || [];
-                    this.roadmapItems = d.roadmapItems || [];
-                    this.settings = d.settings || this.settings;
-                    this.userStats = d.userStats || this.userStats;
-                    if (d.pomoSettings) {
-                        this.pomo.settings = d.pomoSettings;
-                        this.resetPomo();
-                    }
+                if(d) { 
+                    this.exams=d.exams||[]; this.events=d.events||[]; this.todos=d.todos||[]; this.roadmapItems=d.roadmapItems||[];
+                    this.settings=d.settings||this.settings; this.userStats=d.userStats||this.userStats;
+                    if(d.pomoSettings) { this.pomo.settings = d.pomoSettings; this.resetPomo(); }
                 }
             },
             updateStreak() {
                 const today = new Date().toDateString();
                 if (this.userStats.lastStudyDate !== today) {
-                    const yesterday = new Date();
-                    yesterday.setDate(yesterday.getDate() - 1);
-                    // Logica streak omessa per brevità, intatta
+                    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+                    if (this.userStats.lastStudyDate !== yesterday.toDateString()) {}
                 }
             },
             logStudyActivity() {
                 const today = new Date().toDateString();
-                if (this.userStats.lastStudyDate !== today) {
-                    this.userStats.streak++;
-                    this.userStats.lastStudyDate = today;
-                    confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
-                }
+                if (this.userStats.lastStudyDate !== today) { this.userStats.streak++; this.userStats.lastStudyDate = today; confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } }); }
             },
-            openTimeModal(exam) {
-                this.selectedExamForTime = exam;
-                this.customTimeMinutes = '';
-                this.modals.time = true;
-            },
+            openTimeModal(exam) { this.selectedExamForTime = exam; this.customTimeMinutes = ''; this.modals.time = true; },
             addTime(minutes) {
-                if (!minutes || minutes <= 0) return;
-                if (this.selectedExamForTime) {
+                if(!minutes || minutes <= 0) return;
+                if(this.selectedExamForTime) {
                     const hoursToAdd = parseFloat((minutes / 60).toFixed(2));
                     this.selectedExamForTime.studyHours = (this.selectedExamForTime.studyHours || 0) + hoursToAdd;
-                    this.logStudyActivity();
-                    this.modals.time = false;
+                    this.logStudyActivity(); this.modals.time = false;
                 }
             },
             formatStudyTime(hours) {
-                if (!hours) return '0h';
-                const h = Math.floor(hours);
-                const m = Math.round((hours - h) * 60);
+                if(!hours) return '0h';
+                const h = Math.floor(hours); const m = Math.round((hours - h) * 60);
                 return h === 0 ? `${m}m` : (m === 0 ? `${h}h` : `${h}h ${m}m`);
             },
             addToRoadmap() {
-                if (!this.formRoadmap.topic || !this.formRoadmap.date) return;
-                this.roadmapItems.push({
-                    id: Date.now(),
-                    subjectId: this.formRoadmap.subjectId,
-                    date: this.formRoadmap.date,
-                    topic: this.formRoadmap.topic,
-                    done: false
-                });
+                if(!this.formRoadmap.topic || !this.formRoadmap.date) return;
+                this.roadmapItems.push({ id: Date.now(), subjectId: this.formRoadmap.subjectId, date: this.formRoadmap.date, topic: this.formRoadmap.topic, done: false });
                 this.formRoadmap.topic = '';
             },
-            toggleRoadmapItem(item) {
-                item.done = !item.done;
-                if (item.done) this.logStudyActivity();
-            },
-            deleteRoadmapItem(id) {
-                this.roadmapItems = this.roadmapItems.filter(i => i.id !== id);
-            },
-            getExamName(id) {
-                if (!id) return 'Generale';
-                const e = this.exams.find(ex => ex.id === id);
-                return e ? e.name : 'Materia';
+            toggleRoadmapItem(item) { item.done = !item.done; if(item.done) this.logStudyActivity(); },
+            deleteRoadmapItem(id) { this.roadmapItems = this.roadmapItems.filter(i => i.id !== id); },
+            getExamName(id) { 
+                if(!id) return 'Generale';
+                const e = this.exams.find(ex => ex.id === id); return e ? e.name : 'Materia';
             },
             formatDateHeader(dateStr) {
-                const d = new Date(dateStr);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const inputDate = new Date(dateStr);
-                inputDate.setHours(0, 0, 0, 0);
-                if (inputDate.getTime() === today.getTime()) return 'Oggi';
-                const tomorrow = new Date(today);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                if (inputDate.getTime() === tomorrow.getTime()) return 'Domani';
+                const d = new Date(dateStr); const today = new Date(); today.setHours(0,0,0,0); const inputDate = new Date(dateStr); inputDate.setHours(0,0,0,0);
+                if(inputDate.getTime() === today.getTime()) return 'Oggi';
+                const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1);
+                if(inputDate.getTime() === tomorrow.getTime()) return 'Domani';
                 return d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
             },
-            changeRoadmapMonth(val) {
-                this.roadmapDate = new Date(this.roadmapYear, this.roadmapMonth + val, 1);
-            },
+            changeRoadmapMonth(val) { this.roadmapDate = new Date(this.roadmapYear, this.roadmapMonth + val, 1); },
             getRoadmapTasksForDate(day) {
-                const dateStr = `${this.roadmapYear}-${String(this.roadmapMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dateStr = `${this.roadmapYear}-${String(this.roadmapMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
                 return this.roadmapItems.filter(i => i.date === dateStr);
             },
-            openModal(type) {
-                if (type === 'exam') {
-                    this.editingExam = null;
-                    this.formExam = { name: '', cfu: 6, semestre: 1, superato: false, grade: null, lode: false, note: '', studyHours: 0 };
-                } else {
-                    this.formEvent = { title: '', date: new Date().toISOString().split('T')[0], type: 'Scritto', room: '' };
-                }
-                this.modals[type] = true;
-            },
-            saveExam() {
-                if (!this.formExam.name) return;
-                if (this.editingExam) Object.assign(this.editingExam, this.formExam);
-                else this.exams.push({ ...this.formExam, id: Date.now() });
-                this.modals.exam = false;
-            },
-            editExam(e) {
-                this.editingExam = e;
-                this.formExam = { ...e };
-                this.modals.exam = true;
-            },
-            deleteExam(id) {
-                if (confirm('Eliminare?')) this.exams = this.exams.filter(e => e.id !== id);
-            },
-            saveEvent() {
-                if (!this.formEvent.title) return;
-                this.events.push({ ...this.formEvent, id: Date.now() });
-                this.modals.event = false;
-            },
-            deleteEvent(id) {
-                if (confirm('Eliminare?')) this.events = this.events.filter(e => e.id !== id);
-            },
-            openDayModal(day) {
-                this.formEvent.date = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                this.modals.event = true;
-            },
-            getEventsForDay(d) {
-                const s = `${this.currentYear}-${String(this.currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-                return this.events.filter(e => e.date === s);
-            },
-            getEventColorClass(t) {
-                return t === 'Scritto' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : t === 'Orale' ? 'bg-orange-50 text-orange-700 border-orange-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200';
-            },
-            getDaysDiff(d) {
-                return Math.ceil((new Date(d) - new Date().setHours(0, 0, 0, 0)) / (1000 * 60 * 60 * 24));
-            },
-            changeMonth(d) {
-                this.currentMonth += d;
-                if (this.currentMonth > 11) {
-                    this.currentMonth = 0;
-                    this.currentYear++;
-                } else if (this.currentMonth < 0) {
-                    this.currentMonth = 11;
-                    this.currentYear--;
-                }
-            },
-            isToday(d) {
-                const t = new Date();
-                return d === t.getDate() && this.currentMonth === t.getMonth() && this.currentYear === t.getFullYear();
-            },
-
-            // --- TIMER LOGIC ---
+            openModal(type) { if(type==='exam'){this.editingExam=null;this.formExam={name:'',cfu:6,semestre:1,superato:false,grade:null,lode:false,note:'',studyHours:0}}else{this.formEvent={title:'',date:new Date().toISOString().split('T')[0],type:'Scritto',room:''}} this.modals[type]=true; },
+            saveExam() { if(!this.formExam.name)return; if(this.editingExam) Object.assign(this.editingExam, this.formExam); else this.exams.push({...this.formExam, id:Date.now()}); this.modals.exam=false; },
+            editExam(e) { this.editingExam=e; this.formExam={...e}; this.modals.exam=true; },
+            deleteExam(id) { if(confirm('Eliminare?')) this.exams=this.exams.filter(e=>e.id!==id); },
+            saveEvent() { if(!this.formEvent.title)return; this.events.push({...this.formEvent, id:Date.now()}); this.modals.event=false; },
+            deleteEvent(id) { if(confirm('Eliminare?')) this.events=this.events.filter(e=>e.id!==id); },
+            openDayModal(day) { this.formEvent.date=`${this.currentYear}-${String(this.currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`; this.modals.event=true; },
+            getEventsForDay(d) { const s=`${this.currentYear}-${String(this.currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; return this.events.filter(e=>e.date===s); },
+            getEventColorClass(t) { return t==='Scritto'?'bg-indigo-50 text-indigo-700 border-indigo-200':t==='Orale'?'bg-orange-50 text-orange-700 border-orange-200':'bg-emerald-50 text-emerald-700 border-emerald-200'; },
+            getDaysDiff(d) { return Math.ceil((new Date(d)-new Date().setHours(0,0,0,0))/(1000*60*60*24)); },
+            changeMonth(d) { this.currentMonth+=d; if(this.currentMonth>11){this.currentMonth=0;this.currentYear++} else if(this.currentMonth<0){this.currentMonth=11;this.currentYear--} },
+            isToday(d) { const t=new Date(); return d===t.getDate() && this.currentMonth===t.getMonth() && this.currentYear===t.getFullYear(); },
+            
+            // --- FIX TIMER ROBUSTO (FUNZIONA IN BACKGROUND) ---
             togglePomo() {
-                if (this.pomo.active) {
+                if(this.pomo.active) {
                     clearInterval(this.pomo.interval);
                     this.pomo.active = false;
                 } else {
                     this.pomo.active = true;
+                    // Calcolo ora di fine basata sul clock di sistema
                     this.pomo.endTime = Date.now() + (this.pomo.timeLeft * 1000);
-
+                    
                     this.pomo.interval = setInterval(() => {
                         const now = Date.now();
                         const diff = Math.ceil((this.pomo.endTime - now) / 1000);
-
-                        if (diff >= 0) {
+                        
+                        if(diff >= 0) {
                             this.pomo.timeLeft = diff;
-                        } else {
+                        } else { 
                             this.pomo.timeLeft = 0;
                             clearInterval(this.pomo.interval);
                             this.pomo.active = false;
-                            alert("Tempo scaduto!");
-                            if (this.pomo.mode === 'work') {
+                            alert("Tempo scaduto!"); 
+                            if(this.pomo.mode === 'work') {
                                 this.logStudyActivity();
-                                if (this.pomo.selectedExamId) {
+                                if(this.pomo.selectedExamId) {
                                     const ex = this.exams.find(e => e.id === this.pomo.selectedExamId);
-                                    if (ex) {
+                                    if(ex) {
                                         const mins = this.pomo.settings.work;
                                         const hours = parseFloat((mins / 60).toFixed(2));
                                         ex.studyHours = (ex.studyHours || 0) + hours;
@@ -541,133 +520,64 @@
                                     }
                                 }
                             }
-                            this.resetPomo();
+                            this.resetPomo(); 
                         }
                     }, 1000);
                 }
             },
-            resetPomo() {
-                clearInterval(this.pomo.interval);
-                this.pomo.active = false;
-                this.pomo.timeLeft = (this.pomo.mode === 'work' ? this.pomo.settings.work : this.pomo.settings.break) * 60;
-                this.pomo.totalTime = this.pomo.timeLeft;
-            },
-            setPomoMode(m) {
-                this.pomo.mode = m;
-                this.resetPomo();
-            },
-            applyPomoSettings() {
-                this.showPomoSettings = false;
-                this.resetPomo();
-            },
-            formatTime(s) {
-                const m = Math.floor(s / 60);
-                const sec = s % 60;
-                return `${m}:${sec < 10 ? '0' : ''}${sec}`;
-            },
-            addTodo() {
-                if (this.newTodo) {
-                    this.todos.push({ id: Date.now(), text: this.newTodo, done: false });
-                    this.newTodo = '';
-                }
-            },
+            resetPomo() { clearInterval(this.pomo.interval); this.pomo.active = false; this.pomo.timeLeft = (this.pomo.mode === 'work' ? this.pomo.settings.work : this.pomo.settings.break) * 60; this.pomo.totalTime = this.pomo.timeLeft; },
+            setPomoMode(m) { this.pomo.mode = m; this.resetPomo(); },
+            applyPomoSettings() { this.showPomoSettings = false; this.resetPomo(); },
+            formatTime(s) { const m = Math.floor(s / 60); const sec = s % 60; return `${m}:${sec < 10 ? '0' : ''}${sec}`; },
+            addTodo() { if(this.newTodo) { this.todos.push({id:Date.now(), text:this.newTodo, done:false}); this.newTodo=''; } },
             toggleTodo(t) { t.done = !t.done; },
-            deleteTodo(id) { this.todos = this.todos.filter(t => t.id !== id); },
-
-            // --- CHART LOGIC ---
+            deleteTodo(id) { this.todos = this.todos.filter(t=>t.id!==id); },
+            
+            // --- FIX CHART ROBUSTO ---
             renderChartWithDelay() {
                 nextTick(() => {
                     setTimeout(() => {
                         const ctx = document.getElementById('mainChart');
-                        if (!ctx) return;
-                        if (this.chartInstance) {
-                            this.chartInstance.destroy();
-                            this.chartInstance = null;
-                        }
+                        if(!ctx) return;
+                        if(this.chartInstance) { this.chartInstance.destroy(); this.chartInstance = null; }
                         const passed = this.exams.filter(e => e.superato);
-
-                        if (passed.length === 0) return;
+                        
+                        if(passed.length === 0) return; // Niente da mostrare
 
                         const labels = passed.map(e => e.name);
-                        const data = [];
-                        let sum = 0;
-
-                        passed.forEach((e, i) => {
+                        const data = []; let sum = 0;
+                        
+                        passed.forEach((e, i) => { 
+                            // Fix per i voti letti come stringhe
                             const voto = e.lode ? 30 : Number(e.grade);
-                            sum += voto;
-                            data.push((sum / (i + 1)).toFixed(2));
+                            sum += voto; 
+                            data.push((sum / (i + 1)).toFixed(2)); 
                         });
-
+                        
                         this.chartInstance = new Chart(ctx, {
                             type: 'line',
                             data: {
                                 labels: labels,
                                 datasets: [{
-                                    label: 'Media',
-                                    data: data,
-                                    borderColor: '#6366f1',
-                                    backgroundColor: (c) => {
-                                        const g = c.chart.ctx.createLinearGradient(0, 0, 0, 300);
-                                        g.addColorStop(0, 'rgba(99,102,241,0.4)');
-                                        g.addColorStop(1, 'rgba(99,102,241,0)');
-                                        return g;
-                                    },
-                                    fill: true,
-                                    tension: 0.4,
-                                    pointBackgroundColor: '#fff',
-                                    pointBorderColor: '#6366f1',
-                                    pointRadius: 5
+                                    label: 'Media', data: data, borderColor: '#6366f1',
+                                    backgroundColor: (c) => { const g = c.chart.ctx.createLinearGradient(0,0,0,300); g.addColorStop(0,'rgba(99,102,241,0.4)'); g.addColorStop(1,'rgba(99,102,241,0)'); return g; },
+                                    fill: true, tension: 0.4, pointBackgroundColor: '#fff', pointBorderColor: '#6366f1', pointRadius: 5
                                 }]
                             },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: { legend: { display: false } },
-                                scales: {
-                                    y: { min: 18, max: 31, grid: { borderDash: [4, 4] } },
-                                    x: { grid: { display: false } }
-                                }
-                            }
+                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 18, max: 31, grid: { borderDash: [4, 4] } }, x: { grid: { display: false } } } }
                         });
                     }, 350);
                 });
             },
-            exportData() {
-                const s = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem('uni_data_v16'));
-                const a = document.createElement('a');
-                a.href = s;
-                a.download = "uni_backup.json";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            },
+            exportData() { const s = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem('uni_data_v16')); const a = document.createElement('a'); a.href=s; a.download="uni_backup.json"; document.body.appendChild(a); a.click(); a.remove(); },
             triggerImport() { this.$refs.fileInput.click(); },
             importData(e) {
-                const f = e.target.files[0];
-                if (!f) return;
+                const f = e.target.files[0]; if(!f) return;
                 const r = new FileReader();
-                r.onload = (ev) => {
-                    try {
-                        const d = JSON.parse(ev.target.result);
-                        this.exams = d.exams;
-                        this.events = d.events;
-                        this.todos = d.todos;
-                        this.roadmapItems = d.roadmapItems;
-                        this.settings = d.settings;
-                        this.userStats = d.userStats;
-                        alert("Fatto!");
-                    } catch (x) {
-                        alert("Errore file");
-                    }
-                };
+                r.onload = (ev) => { try { const d=JSON.parse(ev.target.result); this.exams=d.exams; this.events=d.events; this.todos=d.todos; this.roadmapItems=d.roadmapItems; this.settings=d.settings; this.userStats=d.userStats; alert("Fatto!"); } catch(x){ alert("Errore file"); } };
                 r.readAsText(f);
             },
-            resetAll() {
-                if (confirm("Cancellare TUTTO?")) {
-                    localStorage.removeItem('uni_data_v16');
-                    location.reload();
-                }
-            }
+            resetAll() { if(confirm("Cancellare TUTTO?")) { localStorage.removeItem('uni_data_v16'); location.reload(); } }
         }
     }).mount('#app');
 </script>
