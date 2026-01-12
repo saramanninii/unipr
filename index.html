@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>università</title>
+    <title>Uni - V17.1 (Supporto Idoneità)</title>
     
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -76,7 +76,7 @@
     <main class="flex-1 h-full overflow-y-auto relative bg-gray-50 dark:bg-darkbg scroll-smooth">
         <header class="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-darkcard sticky top-0 z-20 border-b dark:border-slate-800 shadow-sm">
             <span class="font-bold text-primary flex items-center gap-2 text-xl"><i class="ph-bold ph-student"></i> Uni</span>
-        </header>
+            </header>
 
         <div class="p-6 lg:p-10 max-w-7xl mx-auto pb-32">
             <transition name="page" mode="out-in">
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <header class="mb-8 flex justify-between items-end">
-                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight text-slate-900 dark:text-white">Dashboard</h2><p class="text-slate-500 dark:text-slate-400 font-medium">Panoramica della tua carriera accademica.</p></div>
+                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight text-slate-900 dark:text-white">Dashboard</h2><p class="text-slate-500 dark:text-slate-400 font-medium">Panoramica della tua carriera.</p></div>
                     </header>
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                         <div class="bg-white dark:bg-darkcard p-5 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm"><div class="flex items-center gap-2 mb-2 text-slate-400 text-xs font-bold uppercase tracking-wider"><i class="ph-bold ph-calculator text-indigo-500"></i> Aritmetica</div><span class="text-3xl font-bold text-slate-700 dark:text-white">{{ kpi.mediaAritmetica }}</span></div>
@@ -124,8 +124,8 @@
                                         <td class="p-5 text-sm font-medium text-slate-500">{{ exam.cfu }}</td>
                                         <td class="p-5">
                                             <span v-if="exam.superato">
-                                                <span v-if="exam.grade && exam.grade > 0" class="font-bold text-lg" :class="exam.grade >= 28 ? 'text-emerald-500' : (exam.grade >= 24 ? 'text-indigo-500' : 'text-slate-600')">{{ exam.lode ? '30L' : exam.grade }}</span>
-                                                <span v-else class="text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400 px-2 py-1 rounded-lg">IDONEO</span>
+                                                <span v-if="exam.grade && Number(exam.grade) > 0" class="font-bold text-lg" :class="exam.grade >= 28 ? 'text-emerald-500' : (exam.grade >= 24 ? 'text-indigo-500' : 'text-slate-600')">{{ exam.lode ? '30L' : exam.grade }}</span>
+                                                <span v-else class="text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300 px-2 py-1 rounded">IDONEO</span>
                                             </span>
                                             <span v-else class="text-slate-300">-</span>
                                         </td>
@@ -162,6 +162,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="lg:col-span-2 space-y-8">
                             <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700">
                                 <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg flex items-center gap-2 text-slate-700 dark:text-white"><i class="ph-bold ph-calendar text-primary"></i> {{ roadmapMonthName }} {{ roadmapYear }}</h3><div class="flex gap-1"><button @click="changeRoadmapMonth(-1)" class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"><i class="ph-bold ph-caret-left"></i></button><button @click="changeRoadmapMonth(1)" class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"><i class="ph-bold ph-caret-right"></i></button></div></div>
@@ -174,6 +175,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div v-if="roadmapItems.length === 0" class="flex flex-col items-center justify-center py-12 text-slate-400 bg-white dark:bg-darkcard rounded-2xl border border-dashed border-gray-300 dark:border-slate-700"><i class="ph-duotone ph-path text-4xl mb-3"></i><p class="font-medium">Nessun piano di studio. Aggiungi il primo step!</p></div>
                             <div v-else class="space-y-8">
                                 <div v-for="(group, date) in groupedRoadmap" :key="date" class="relative pl-4 border-l-2 border-gray-200 dark:border-slate-700">
@@ -234,11 +236,15 @@
                 <input v-model="formExam.name" placeholder="Nome Materia" class="input-elegant">
                 <div class="grid grid-cols-2 gap-4"><input v-model.number="formExam.cfu" type="number" placeholder="CFU" class="input-elegant"><input v-model.number="formExam.semestre" type="number" placeholder="Semestre" class="input-elegant"></div>
                 <div class="flex justify-between items-center p-4 bg-gray-50 dark:bg-slate-800 rounded-xl"><span class="font-bold">Esame Superato?</span><button @click="formExam.superato = !formExam.superato" class="w-14 h-8 rounded-full relative shadow-inner transition-colors" :class="formExam.superato ? 'bg-emerald-500' : 'bg-slate-300'"><div class="w-6 h-6 bg-white rounded-full absolute top-1 transition-all shadow-md" :class="formExam.superato ? 'left-7' : 'left-1'"></div></button></div>
-                <div v-if="formExam.superato" class="grid grid-cols-2 gap-4">
-                    <input v-model.number="formExam.grade" type="number" placeholder="Voto (vuoto=Idoneità)" class="input-elegant">
-                    <label class="flex items-center gap-3 cursor-pointer p-2 justify-center bg-gray-50 dark:bg-slate-800 rounded-xl"><div class="w-5 h-5 border-2 rounded flex items-center justify-center transition-colors" :class="formExam.lode ? 'bg-primary border-primary' : 'border-slate-300'"><i v-if="formExam.lode" class="ph-bold ph-check text-white text-xs"></i></div><input type="checkbox" v-model="formExam.lode" class="hidden"><span class="font-bold">Lode</span></label>
+                
+                <div v-if="formExam.superato" class="space-y-2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input v-model.number="formExam.grade" type="number" placeholder="Voto" class="input-elegant">
+                        <label class="flex items-center gap-3 cursor-pointer p-2 justify-center bg-gray-50 dark:bg-slate-800 rounded-xl"><div class="w-5 h-5 border-2 rounded flex items-center justify-center transition-colors" :class="formExam.lode ? 'bg-primary border-primary' : 'border-slate-300'"><i v-if="formExam.lode" class="ph-bold ph-check text-white text-xs"></i></div><input type="checkbox" v-model="formExam.lode" class="hidden"><span class="font-bold">Lode</span></label>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 text-center">Lascia il voto vuoto (o 0) per registrare un'<strong>Idoneità</strong>.</p>
                 </div>
-                <p v-if="formExam.superato && (!formExam.grade || formExam.grade == 0)" class="text-xs text-center text-emerald-600 font-bold bg-emerald-50 py-2 rounded-lg">Questo esame sarà contato come Idoneità (solo CFU).</p>
+
                 <textarea v-model="formExam.note" placeholder="Note..." class="input-elegant h-24 resize-none"></textarea>
             </div>
             <div class="flex justify-end gap-3 mt-8"><button @click="modals.exam = false" class="px-5 py-2.5 font-bold text-slate-500 hover:bg-slate-100 rounded-xl">Annulla</button><button @click="saveExam" class="px-6 py-2.5 bg-primary text-white font-bold rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-500/30">Salva</button></div>
@@ -287,7 +293,6 @@
 
                 userStats: { streak: 0, lastStudyDate: null },
                 
-                // Form Esame: grade inizializzato a null per permettere idoneità
                 formExam: { name: '', cfu: 6, semestre: 1, superato: false, grade: null, lode: false, note: '', studyHours: 0 },
                 formEvent: { title: '', date: '', type: 'Scritto', room: '' },
 
@@ -316,25 +321,28 @@
                 let day = new Date(this.roadmapYear, this.roadmapMonth, 1).getDay(); 
                 return day === 0 ? 6 : day - 1; 
             },
-            // LOGICA KPI CORRETTA PER IDONEITÀ
+            
+            // --- MODIFICA LOGICA KPI PER IDONEITÀ ---
             kpi() {
-                // 1. Tutti i superati contano per i CFU
+                // 1. Tutti gli esami SUPERATI (includono Idoneità per il conteggio CFU)
                 const passed = this.exams.filter(e => e.superato);
                 const cfuTotaliAcquisiti = passed.reduce((sum, e) => sum + e.cfu, 0);
 
-                // 2. Solo quelli con voto > 0 contano per le medie
+                // 2. Solo gli esami CON VOTO (per le medie)
+                // Escludiamo quelli con grade nullo o 0
                 const gradedExams = passed.filter(e => e.grade && Number(e.grade) > 0);
 
                 if (!gradedExams.length) return { mediaAritmetica: 0, mediaPonderata: 0, cfuAttuali: cfuTotaliAcquisiti, votoLaurea: 0 };
                 
                 const sumV = gradedExams.reduce((sum, e) => sum + (e.lode ? 31 : Number(e.grade)), 0); 
+                // Il denominatore della ponderata è la somma dei CFU solo degli esami GRADED
                 const sumP = gradedExams.reduce((sum, e) => sum + ((e.lode ? 30 : Number(e.grade)) * e.cfu), 0);
-                const cfuDenominatore = gradedExams.reduce((sum, e) => sum + e.cfu, 0); 
+                const cfuDenominatore = gradedExams.reduce((sum, e) => sum + e.cfu, 0);
                 
                 const mP = sumP / cfuDenominatore;
 
                 return { 
-                    mediaAritmetica: (sumV / gradedExams.length).toFixed(2), 
+                    mediaAritmetica: (sumV/gradedExams.length).toFixed(2), 
                     mediaPonderata: mP.toFixed(2), 
                     cfuAttuali: cfuTotaliAcquisiti, 
                     votoLaurea: ((mP*110)/30 + (this.settings.thesisPoints||0)).toFixed(1) 
@@ -361,6 +369,7 @@
         },
         mounted() {
             this.loadData();
+            // Niente updateStreak qui
             const savedTheme = localStorage.getItem('uni_theme');
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) { this.isDark = true; document.documentElement.classList.add('dark'); }
             if(this.currentView === 'dashboard') this.renderChartWithDelay();
@@ -382,6 +391,7 @@
                 }
             },
             logStudyActivity() {
+                // Semplificato: Solo coriandoli, niente calcolo streak
                 confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } }); 
             },
             addToRoadmap() {
@@ -420,7 +430,7 @@
             changeMonth(d) { this.currentMonth+=d; if(this.currentMonth>11){this.currentMonth=0;this.currentYear++} else if(this.currentMonth<0){this.currentMonth=11;this.currentYear--} },
             isToday(d) { const t=new Date(); return d===t.getDate() && this.currentMonth===t.getMonth() && this.currentYear===t.getFullYear(); },
             
-            // CHART CORRETTO PER IDONEITÀ
+            // --- CHART (Modificato per ignorare i voti = 0) ---
             renderChartWithDelay() {
                 nextTick(() => {
                     setTimeout(() => {
@@ -428,15 +438,15 @@
                         if(!ctx) return;
                         if(this.chartInstance) { this.chartInstance.destroy(); this.chartInstance = null; }
                         
-                        // Filtro: Solo votati (>0) per il grafico della media
-                        const gradedPassed = this.exams.filter(e => e.superato && e.grade && Number(e.grade) > 0);
+                        // FILTRO: Solo esami superati E che hanno un voto valido (> 0)
+                        const passedAndGraded = this.exams.filter(e => e.superato && e.grade && Number(e.grade) > 0);
                         
-                        if(gradedPassed.length === 0) return;
+                        if(passedAndGraded.length === 0) return;
 
-                        const labels = gradedPassed.map(e => e.name);
+                        const labels = passedAndGraded.map(e => e.name);
                         const data = []; let sum = 0;
                         
-                        gradedPassed.forEach((e, i) => { 
+                        passedAndGraded.forEach((e, i) => { 
                             const voto = e.lode ? 30 : Number(e.grade);
                             sum += voto; 
                             data.push((sum / (i + 1)).toFixed(2)); 
@@ -462,7 +472,7 @@
             importData(e) {
                 const f = e.target.files[0]; if(!f) return;
                 const r = new FileReader();
-                r.onload = (ev) => { try { const d=JSON.parse(ev.target.result); this.exams=d.exams; this.events=d.events; this.roadmapItems=d.roadmapItems; this.settings=d.settings; this.userStats=d.userStats; alert("Backup ripristinato con successo!"); window.location.reload(); } catch(x){ alert("Errore nel file di backup."); } };
+                r.onload = (ev) => { try { const d=JSON.parse(ev.target.result); this.exams=d.exams; this.events=d.events; this.roadmapItems=d.roadmapItems; this.settings=d.settings; this.userStats=d.userStats; alert("Fatto!"); } catch(x){ alert("Errore file"); } };
                 r.readAsText(f);
             },
             resetAll() { if(confirm("Cancellare TUTTO?")) { localStorage.removeItem('uni_data_v16'); location.reload(); } }
