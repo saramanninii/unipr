@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uni - V16 Stable Timer & Chart</title>
+    <title>Uni - V17 Essential</title>
     
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,14 +54,6 @@
             <h1 class="font-bold text-xl ml-3 hidden lg:block tracking-tight">Uni</h1>
         </div>
         
-        <div class="hidden lg:flex flex-col px-6 py-4 border-b border-gray-100 dark:border-slate-800">
-            <div class="flex items-center justify-between text-xs font-bold uppercase text-slate-400 mb-2">
-                <span>Streak</span>
-                <i class="ph-fill ph-fire text-orange-500 text-lg animate-pulse"></i>
-            </div>
-            <div class="text-2xl font-black text-slate-800 dark:text-white">{{ userStats.streak }} <span class="text-sm font-medium text-slate-400">giorni</span></div>
-        </div>
-
         <nav class="flex-1 overflow-y-auto py-4 space-y-1 px-3">
             <template v-for="item in navItems" :key="item.id">
                 <button @click="currentView = item.id" 
@@ -84,8 +76,7 @@
     <main class="flex-1 h-full overflow-y-auto relative bg-gray-50 dark:bg-darkbg scroll-smooth">
         <header class="lg:hidden flex items-center justify-between p-4 bg-white dark:bg-darkcard sticky top-0 z-20 border-b dark:border-slate-800 shadow-sm">
             <span class="font-bold text-primary flex items-center gap-2 text-xl"><i class="ph-bold ph-student"></i> Uni</span>
-            <div class="flex items-center gap-1 text-orange-500 font-bold text-sm bg-orange-50 dark:bg-orange-900/20 px-2 py-1 rounded-full"><i class="ph-fill ph-fire"></i> {{ userStats.streak }}</div>
-        </header>
+            </header>
 
         <div class="p-6 lg:p-10 max-w-7xl mx-auto pb-32">
             <transition name="page" mode="out-in">
@@ -113,22 +104,25 @@
 
                 <div v-if="currentView === 'exams'" key="exams">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Libretto</h2><p class="text-slate-500 dark:text-slate-400 font-medium">Gestisci esami e monitora l'efficienza.</p></div>
+                        <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Libretto</h2><p class="text-slate-500 dark:text-slate-400 font-medium">Gestisci esami e monitora i tuoi voti.</p></div>
                         <button @click="openModal('exam')" class="bg-primary hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-indigo-500/30 transition-all flex items-center justify-center gap-2 active:scale-95"><i class="ph-bold ph-plus-circle text-lg"></i> Aggiungi Esame</button>
                     </div>
                     <div class="bg-white dark:bg-darkcard rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse whitespace-nowrap">
                                 <thead class="bg-slate-50 dark:bg-slate-800/50 text-xs uppercase text-slate-500 font-bold tracking-wider">
-                                    <tr><th class="p-5 pl-6">Materia</th><th class="p-5">CFU</th><th class="p-5">Voto</th><th class="p-5">Tempo Studio</th><th class="p-5">Efficienza</th><th class="p-5 text-right pr-6">Azioni</th></tr>
+                                    <tr>
+                                        <th class="p-5 pl-6">Materia</th>
+                                        <th class="p-5">CFU</th>
+                                        <th class="p-5">Voto</th>
+                                        <th class="p-5 text-right pr-6">Azioni</th>
+                                    </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100 dark:divide-slate-700">
                                     <tr v-for="exam in sortedExams" :key="exam.id" class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                         <td class="p-5 pl-6"><div class="font-bold text-slate-700 dark:text-slate-200 text-base">{{ exam.name }}</div><div class="flex items-center gap-2 mt-1"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold" :class="exam.superato ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400' : 'bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400'"><span class="w-1 h-1 rounded-full" :class="exam.superato ? 'bg-emerald-500' : 'bg-slate-400'"></span>{{ exam.superato ? 'Superato' : 'Da Dare' }}</span></div></td>
                                         <td class="p-5 text-sm font-medium text-slate-500">{{ exam.cfu }}</td>
                                         <td class="p-5"><span v-if="exam.superato" class="font-bold text-lg" :class="exam.grade >= 28 ? 'text-emerald-500' : (exam.grade >= 24 ? 'text-indigo-500' : 'text-slate-600')">{{ exam.lode ? '30L' : exam.grade }}</span><span v-else class="text-slate-300">-</span></td>
-                                        <td class="p-5"><div class="flex items-center gap-3"><div class="font-bold text-slate-700 dark:text-slate-300 min-w-[60px]">{{ formatStudyTime(exam.studyHours) }}</div><button @click="openTimeModal(exam)" class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center hover:bg-indigo-100 dark:hover:bg-slate-600 transition-colors shadow-sm border border-indigo-100 dark:border-slate-600"><i class="ph-bold ph-clock-plus"></i></button></div></td>
-                                        <td class="p-5"><div v-if="exam.superato && exam.studyHours > 0"><span class="text-xs font-bold text-slate-500">Voto/Ora:</span><div class="font-bold text-accent">{{ ((exam.grade || 18) / exam.studyHours).toFixed(2) }}</div></div><span v-else class="text-xs text-slate-300">N/A</span></td>
                                         <td class="p-5 pr-6 text-right"><button @click="editExam(exam)" class="text-slate-400 hover:text-primary p-2 transition-colors"><i class="ph-bold ph-pencil-simple text-lg"></i></button><button @click="deleteExam(exam.id)" class="text-slate-400 hover:text-rose-500 p-2 transition-colors ml-1"><i class="ph-bold ph-trash text-lg"></i></button></td>
                                     </tr>
                                 </tbody>
@@ -196,45 +190,6 @@
                     </div>
                 </div>
 
-                <div v-if="currentView === 'planning'" key="planning">
-                    <header class="mb-8"><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Focus Zone</h2><p class="text-slate-500 font-medium">Timer Pomodoro e note veloci.</p></header>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div class="lg:col-span-1">
-                            <div class="bg-white dark:bg-darkcard rounded-3xl p-8 shadow-xl border border-indigo-100 dark:border-slate-700 text-center relative overflow-hidden flex flex-col items-center">
-                                <div class="absolute top-0 left-0 w-full h-1.5 bg-gray-100 dark:bg-slate-800"><div class="h-full bg-gradient-to-r from-secondary to-primary transition-all duration-1000" :style="`width: ${(pomo.timeLeft / pomo.totalTime)*100}%`"></div></div>
-                                <div class="flex justify-between w-full mb-6"><h3 class="text-slate-400 text-xs font-bold uppercase tracking-widest">Focus Timer</h3><button @click="showPomoSettings = !showPomoSettings" class="text-slate-400 hover:text-primary"><i class="ph-bold ph-gear"></i> Imposta</button></div>
-                                <div v-if="showPomoSettings" class="w-full bg-gray-50 dark:bg-slate-800 rounded-xl p-4 mb-6 animate-fade-in-down">
-                                    <div class="mb-3"><label class="text-xs font-bold text-slate-500 block mb-1">Durata Studio (min)</label><input type="range" v-model="pomo.settings.work" min="1" max="90" step="1" class="w-full accent-primary"><div class="text-right text-xs font-bold text-primary">{{ pomo.settings.work }} min</div></div>
-                                    <div><label class="text-xs font-bold text-slate-500 block mb-1">Durata Pausa (min)</label><input type="range" v-model="pomo.settings.break" min="1" max="30" step="1" class="w-full accent-emerald-500"><div class="text-right text-xs font-bold text-emerald-500">{{ pomo.settings.break }} min</div></div>
-                                    <button @click="applyPomoSettings" class="w-full mt-3 bg-slate-200 dark:bg-slate-700 text-xs font-bold py-2 rounded-lg">Salva</button>
-                                </div>
-                                <div v-else>
-                                    <div class="text-7xl font-bold tabular-nums tracking-tighter mb-8 text-slate-800 dark:text-white transition-colors duration-500">{{ formatTime(pomo.timeLeft) }}</div>
-                                    <div class="flex justify-center gap-2 mb-8 bg-gray-100 dark:bg-slate-800 p-1 rounded-xl"><button @click="setPomoMode('work')" class="px-4 py-2 rounded-lg text-xs font-bold transition-all" :class="pomo.mode === 'work' ? 'bg-white dark:bg-darkcard text-primary shadow-sm' : 'text-slate-500 hover:text-slate-700'">Studio</button><button @click="setPomoMode('break')" class="px-4 py-2 rounded-lg text-xs font-bold transition-all" :class="pomo.mode === 'break' ? 'bg-white dark:bg-darkcard text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'">Pausa</button></div>
-                                </div>
-                                <button @click="togglePomo" class="w-full py-4 rounded-xl font-bold text-lg text-white shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-3" :class="pomo.active ? 'bg-slate-800 hover:bg-slate-900' : 'bg-primary hover:bg-indigo-700 shadow-indigo-500/30'"><i :class="pomo.active ? 'ph-fill ph-pause' : 'ph-fill ph-play'"></i>{{ pomo.active ? 'Pausa' : 'Avvia' }}</button>
-                                
-                                <div v-if="pomo.mode === 'work'" class="mt-6 w-full">
-                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 text-left pl-1">Materia Target</label>
-                                    <div class="relative">
-                                        <select v-model="pomo.selectedExamId" class="w-full p-3 pl-4 pr-10 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-slate-700 dark:text-white font-bold text-sm appearance-none focus:border-primary focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900/30 outline-none transition-all cursor-pointer">
-                                            <option :value="null">-- Nessuna (Solo Timer) --</option>
-                                            <option v-for="e in exams" :key="e.id" :value="e.id">{{ e.name }}</option>
-                                        </select>
-                                        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 pointer-events-none"><i class="ph-bold ph-caret-down"></i></div>
-                                    </div>
-                                </div>
-                                <button @click="resetPomo" class="mt-6 text-xs text-slate-400 font-bold hover:text-rose-500 transition-colors uppercase tracking-wider flex items-center gap-1"><i class="ph-bold ph-arrow-counter-clockwise"></i> Resetta</button>
-                            </div>
-                        </div>
-                        <div class="lg:col-span-2 bg-white dark:bg-darkcard rounded-2xl p-6 border border-gray-100 dark:border-slate-700 shadow-sm flex flex-col h-full">
-                            <h3 class="font-bold text-lg mb-6 flex items-center gap-2"><i class="ph-bold ph-list-checks text-accent"></i> Note Veloci</h3>
-                            <div class="flex gap-3 mb-6"><input v-model="newTodo" @keyup.enter="addTodo" type="text" placeholder="Nuova nota..." class="input-elegant"><button @click="addTodo" class="bg-accent hover:bg-violet-600 text-white px-5 rounded-xl shadow-lg shadow-violet-500/30 transition-all active:scale-95"><i class="ph-bold ph-plus text-xl"></i></button></div>
-                            <div class="space-y-2 flex-1 overflow-y-auto pr-2"><div v-for="todo in todos" :key="todo.id" class="group flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 border border-transparent hover:border-gray-100 dark:hover:border-slate-700 transition-all cursor-pointer" @click="toggleTodo(todo)"><div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-200" :class="todo.done ? 'bg-accent border-accent scale-110' : 'border-slate-300 dark:border-slate-600 group-hover:border-accent'"><i v-if="todo.done" class="ph-bold ph-check text-white text-xs"></i></div><span class="flex-1 font-medium transition-colors text-lg" :class="todo.done ? 'text-slate-400 line-through' : 'text-slate-700 dark:text-slate-200'">{{ todo.text }}</span><button @click.stop="deleteTodo(todo.id)" class="opacity-0 group-hover:opacity-100 p-2 text-slate-300 hover:text-rose-500 transition-all"><i class="ph-bold ph-trash"></i></button></div></div>
-                        </div>
-                    </div>
-                </div>
-
                 <div v-if="currentView === 'calendar'" key="calendar">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                         <div><h2 class="text-3xl font-extrabold mb-1 tracking-tight">Calendario</h2><p class="text-slate-500 font-medium">Pianifica i tuoi esami.</p></div>
@@ -294,21 +249,8 @@
             <div class="flex justify-end gap-3 mt-8"><button @click="modals.event = false" class="px-5 py-2.5 font-bold text-slate-500 hover:bg-slate-100 rounded-xl">Annulla</button><button @click="saveEvent" class="px-6 py-2.5 bg-secondary text-white font-bold rounded-xl hover:bg-pink-600 shadow-lg shadow-pink-500/30">Aggiungi</button></div>
         </div>
     </div>
-
-    <div v-if="modals.time" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" @click.self="modals.time = false">
-        <div class="bg-white dark:bg-darkcard w-full max-w-sm rounded-3xl shadow-2xl p-6">
-            <div class="text-center mb-6">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 mb-3"><i class="ph-bold ph-clock text-2xl"></i></div>
-                <h3 class="text-lg font-bold text-slate-800 dark:text-white">Registra Studio</h3>
-                <p class="text-xs text-slate-400 font-medium uppercase mt-1">{{ selectedExamForTime?.name }}</p>
-            </div>
-            <div class="grid grid-cols-3 gap-2 mb-4"><button @click="addTime(15)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+15m</button><button @click="addTime(30)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+30m</button><button @click="addTime(60)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+1h</button><button @click="addTime(120)" class="py-3 rounded-xl bg-gray-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-indigo-50 hover:text-indigo-600 hover:ring-2 hover:ring-indigo-200 transition-all">+2h</button></div>
-            <div class="relative mb-6"><input type="number" v-model.number="customTimeMinutes" placeholder="Minuti personalizzati..." class="input-elegant text-center"><button @click="addTime(customTimeMinutes)" class="absolute right-2 top-2 bottom-2 px-3 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold hover:bg-indigo-200">OK</button></div>
-            <button @click="modals.time = false" class="w-full py-3 text-sm font-bold text-slate-400 hover:text-slate-600">Chiudi</button>
-        </div>
+    
     </div>
-
-</div>
 
 <script>
     const { createApp, nextTick } = Vue;
@@ -318,34 +260,29 @@
             return {
                 currentView: 'dashboard',
                 isDark: false,
-                modals: { exam: false, event: false, time: false },
+                modals: { exam: false, event: false },
                 editingExam: null,
-                selectedExamForTime: null,
-                customTimeMinutes: '',
-                showPomoSettings: false,
                 
                 navItems: [
                     { id: 'dashboard', label: 'Dashboard', icon: 'ph-squares-four' },
                     { id: 'exams', label: 'Libretto', icon: 'ph-books' },
                     { id: 'roadmap', label: 'Roadmap', icon: 'ph-path' },
-                    { id: 'planning', label: 'Focus', icon: 'ph-timer' },
                     { id: 'calendar', label: 'Calendario', icon: 'ph-calendar' },
                     { id: 'settings', label: 'Opzioni', icon: 'ph-gear' }
                 ],
                 
                 settings: { cfuTotali: 180, thesisPoints: 4 },
-                exams: [], events: [], todos: [],
+                exams: [], events: [],
                 roadmapItems: [],
                 formRoadmap: { subjectId: null, date: new Date().toISOString().split('T')[0], topic: '' },
                 roadmapDate: new Date(),
 
+                // Manteniamo userStats per compatibilità, ma non mostriamo streak
                 userStats: { streak: 0, lastStudyDate: null },
+                
+                // Manteniamo studyHours in formExam per compatibilità dati
                 formExam: { name: '', cfu: 6, semestre: 1, superato: false, grade: null, lode: false, note: '', studyHours: 0 },
                 formEvent: { title: '', date: '', type: 'Scritto', room: '' },
-                newTodo: '',
-                
-                // POMODORO CON DATA DI FINE PER EVITARE BLOCCHI IN BACKGROUND
-                pomo: { active: false, mode: 'work', timeLeft: 2700, totalTime: 2700, endTime: null, interval: null, settings: { work: 45, break: 10 }, selectedExamId: null },
 
                 today: new Date(), currentMonth: new Date().getMonth(), currentYear: new Date().getFullYear(),
                 chartInstance: null
@@ -376,7 +313,7 @@
                 const passed = this.exams.filter(e => e.superato);
                 const cfu = passed.reduce((sum, e) => sum + e.cfu, 0);
                 if (!passed.length) return { mediaAritmetica: 0, mediaPonderata: 0, cfuAttuali: 0, votoLaurea: 0 };
-                const sumV = passed.reduce((sum, e) => sum + (e.lode ? 31 : Number(e.grade)), 0); // Forzato Number
+                const sumV = passed.reduce((sum, e) => sum + (e.lode ? 31 : Number(e.grade)), 0); 
                 const sumP = passed.reduce((sum, e) => sum + ((e.lode ? 30 : Number(e.grade)) * e.cfu), 0);
                 const mP = sumP / cfu;
                 return { mediaAritmetica: (sumV/passed.length).toFixed(2), mediaPonderata: mP.toFixed(2), cfuAttuali: cfu, votoLaurea: ((mP*110)/30 + (this.settings.thesisPoints||0)).toFixed(1) }
@@ -387,7 +324,6 @@
                 if (this.kpi.mediaPonderata >= 28) a.push({ type:'success', icon:'ph-thumbs-up', msg:'Media eccellente, continua così!' });
                 const urgent = this.upcomingEvents.find(e => this.getDaysDiff(e.date) <= 3);
                 if(urgent) a.push({ type:'warning', icon:'ph-alarm', msg: `Scadenza vicina: ${urgent.title}` });
-                if(this.userStats.streak > 3) a.push({ type:'success', icon:'ph-fire', msg: `${this.userStats.streak} giorni di fila! 🔥` });
                 return a;
             },
             daysInMonth() { return new Date(this.currentYear, this.currentMonth + 1, 0).getDate(); },
@@ -397,14 +333,13 @@
         watch: {
             exams: { handler() { this.saveData(); if(this.currentView==='dashboard') this.renderChartWithDelay(); }, deep: true },
             events: { handler() { this.saveData(); }, deep: true },
-            todos: { handler() { this.saveData(); }, deep: true },
             roadmapItems: { handler() { this.saveData(); }, deep: true },
             settings: { handler() { this.saveData(); }, deep: true },
             currentView(newVal) { if (newVal === 'dashboard') this.renderChartWithDelay(); }
         },
         mounted() {
             this.loadData();
-            this.updateStreak();
+            // Niente updateStreak qui
             const savedTheme = localStorage.getItem('uni_theme');
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) { this.isDark = true; document.documentElement.classList.add('dark'); }
             if(this.currentView === 'dashboard') this.renderChartWithDelay();
@@ -417,39 +352,17 @@
                 return isInput ? `${palettes[index]} border-2 focus:ring-2 ring-opacity-20` : palettes[index];
             },
             toggleTheme() { this.isDark=!this.isDark; document.documentElement.classList.toggle('dark', this.isDark); localStorage.setItem('uni_theme', this.isDark?'dark':'light'); },
-            saveData() { localStorage.setItem('uni_data_v16', JSON.stringify({ exams: this.exams, events: this.events, todos: this.todos, roadmapItems: this.roadmapItems, settings: this.settings, userStats: this.userStats, pomoSettings: this.pomo.settings })); },
+            saveData() { localStorage.setItem('uni_data_v16', JSON.stringify({ exams: this.exams, events: this.events, todos: [], roadmapItems: this.roadmapItems, settings: this.settings, userStats: this.userStats, pomoSettings: {} })); },
             loadData() {
                 const d = JSON.parse(localStorage.getItem('uni_data_v16') || localStorage.getItem('uni_data_v15') || localStorage.getItem('uni_data_v14'));
                 if(d) { 
-                    this.exams=d.exams||[]; this.events=d.events||[]; this.todos=d.todos||[]; this.roadmapItems=d.roadmapItems||[];
+                    this.exams=d.exams||[]; this.events=d.events||[]; this.roadmapItems=d.roadmapItems||[];
                     this.settings=d.settings||this.settings; this.userStats=d.userStats||this.userStats;
-                    if(d.pomoSettings) { this.pomo.settings = d.pomoSettings; this.resetPomo(); }
-                }
-            },
-            updateStreak() {
-                const today = new Date().toDateString();
-                if (this.userStats.lastStudyDate !== today) {
-                    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
-                    if (this.userStats.lastStudyDate !== yesterday.toDateString()) {}
                 }
             },
             logStudyActivity() {
-                const today = new Date().toDateString();
-                if (this.userStats.lastStudyDate !== today) { this.userStats.streak++; this.userStats.lastStudyDate = today; confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } }); }
-            },
-            openTimeModal(exam) { this.selectedExamForTime = exam; this.customTimeMinutes = ''; this.modals.time = true; },
-            addTime(minutes) {
-                if(!minutes || minutes <= 0) return;
-                if(this.selectedExamForTime) {
-                    const hoursToAdd = parseFloat((minutes / 60).toFixed(2));
-                    this.selectedExamForTime.studyHours = (this.selectedExamForTime.studyHours || 0) + hoursToAdd;
-                    this.logStudyActivity(); this.modals.time = false;
-                }
-            },
-            formatStudyTime(hours) {
-                if(!hours) return '0h';
-                const h = Math.floor(hours); const m = Math.round((hours - h) * 60);
-                return h === 0 ? `${m}m` : (m === 0 ? `${h}h` : `${h}h ${m}m`);
+                // Semplificato: Solo coriandoli, niente calcolo streak
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } }); 
             },
             addToRoadmap() {
                 if(!this.formRoadmap.topic || !this.formRoadmap.date) return;
@@ -487,53 +400,7 @@
             changeMonth(d) { this.currentMonth+=d; if(this.currentMonth>11){this.currentMonth=0;this.currentYear++} else if(this.currentMonth<0){this.currentMonth=11;this.currentYear--} },
             isToday(d) { const t=new Date(); return d===t.getDate() && this.currentMonth===t.getMonth() && this.currentYear===t.getFullYear(); },
             
-            // --- FIX TIMER ROBUSTO (FUNZIONA IN BACKGROUND) ---
-            togglePomo() {
-                if(this.pomo.active) {
-                    clearInterval(this.pomo.interval);
-                    this.pomo.active = false;
-                } else {
-                    this.pomo.active = true;
-                    // Calcolo ora di fine basata sul clock di sistema
-                    this.pomo.endTime = Date.now() + (this.pomo.timeLeft * 1000);
-                    
-                    this.pomo.interval = setInterval(() => {
-                        const now = Date.now();
-                        const diff = Math.ceil((this.pomo.endTime - now) / 1000);
-                        
-                        if(diff >= 0) {
-                            this.pomo.timeLeft = diff;
-                        } else { 
-                            this.pomo.timeLeft = 0;
-                            clearInterval(this.pomo.interval);
-                            this.pomo.active = false;
-                            alert("Tempo scaduto!"); 
-                            if(this.pomo.mode === 'work') {
-                                this.logStudyActivity();
-                                if(this.pomo.selectedExamId) {
-                                    const ex = this.exams.find(e => e.id === this.pomo.selectedExamId);
-                                    if(ex) {
-                                        const mins = this.pomo.settings.work;
-                                        const hours = parseFloat((mins / 60).toFixed(2));
-                                        ex.studyHours = (ex.studyHours || 0) + hours;
-                                        alert(`Aggiunte ${mins} min a ${ex.name}`);
-                                    }
-                                }
-                            }
-                            this.resetPomo(); 
-                        }
-                    }, 1000);
-                }
-            },
-            resetPomo() { clearInterval(this.pomo.interval); this.pomo.active = false; this.pomo.timeLeft = (this.pomo.mode === 'work' ? this.pomo.settings.work : this.pomo.settings.break) * 60; this.pomo.totalTime = this.pomo.timeLeft; },
-            setPomoMode(m) { this.pomo.mode = m; this.resetPomo(); },
-            applyPomoSettings() { this.showPomoSettings = false; this.resetPomo(); },
-            formatTime(s) { const m = Math.floor(s / 60); const sec = s % 60; return `${m}:${sec < 10 ? '0' : ''}${sec}`; },
-            addTodo() { if(this.newTodo) { this.todos.push({id:Date.now(), text:this.newTodo, done:false}); this.newTodo=''; } },
-            toggleTodo(t) { t.done = !t.done; },
-            deleteTodo(id) { this.todos = this.todos.filter(t=>t.id!==id); },
-            
-            // --- FIX CHART ROBUSTO ---
+            // --- CHART ---
             renderChartWithDelay() {
                 nextTick(() => {
                     setTimeout(() => {
@@ -542,13 +409,12 @@
                         if(this.chartInstance) { this.chartInstance.destroy(); this.chartInstance = null; }
                         const passed = this.exams.filter(e => e.superato);
                         
-                        if(passed.length === 0) return; // Niente da mostrare
+                        if(passed.length === 0) return;
 
                         const labels = passed.map(e => e.name);
                         const data = []; let sum = 0;
                         
                         passed.forEach((e, i) => { 
-                            // Fix per i voti letti come stringhe
                             const voto = e.lode ? 30 : Number(e.grade);
                             sum += voto; 
                             data.push((sum / (i + 1)).toFixed(2)); 
@@ -574,7 +440,7 @@
             importData(e) {
                 const f = e.target.files[0]; if(!f) return;
                 const r = new FileReader();
-                r.onload = (ev) => { try { const d=JSON.parse(ev.target.result); this.exams=d.exams; this.events=d.events; this.todos=d.todos; this.roadmapItems=d.roadmapItems; this.settings=d.settings; this.userStats=d.userStats; alert("Fatto!"); } catch(x){ alert("Errore file"); } };
+                r.onload = (ev) => { try { const d=JSON.parse(ev.target.result); this.exams=d.exams; this.events=d.events; this.roadmapItems=d.roadmapItems; this.settings=d.settings; this.userStats=d.userStats; alert("Fatto!"); } catch(x){ alert("Errore file"); } };
                 r.readAsText(f);
             },
             resetAll() { if(confirm("Cancellare TUTTO?")) { localStorage.removeItem('uni_data_v16'); location.reload(); } }
